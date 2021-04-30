@@ -328,7 +328,8 @@ class analisis:
                 None
             if not codigo: break
         # print (codigo) #Imprime el código 
-        print(tabulate(tokens, headers=headers))
+        tabla = tabulate(tokens, headers=headers)
+        print(tabla)
 
 
 
