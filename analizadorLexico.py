@@ -1,4 +1,5 @@
 import sys
+from tabulate import tabulate
 
 #Se creó un diccionario con el cual podremos hacer consultas a la hora de asignar los tokens
 dicc = {
@@ -38,6 +39,10 @@ dicc = {
 codigo = None
 token = None
 archivo = None
+palabra = None
+posicion = 0
+tokens=[]
+headers=["Entrada", "Lexema", "Tipo"]
 
 class analisis:
     #Leerá el archivo que se proporcione y lo guarda en variable
@@ -45,10 +50,18 @@ class analisis:
         global archivo
         archivo = open("codigo.txt", "r")
         global codigo
+    
+    #Guardará los tokens en listas para después mostrarlo en una tabla
+    def symbolTable(self):
+        lista1 = [posicion, palabra, token]
+        tokens.append(lista1)
+        # print(tokens)
 
     #Comienza a leer caracter por caracter
     def conteo(self):
+        global posicion
         global token
+        global palabra
         while True:
             codigo=archivo.read(1)
             palabra = codigo
@@ -66,9 +79,9 @@ class analisis:
                                 break;
                             palabra+=b
                         if(palabra == "void"):
-                            token = dicc["Void"]
+                            token = dicc["Void"]     
                         else:
-                            token = dicc["id"] #En dado caso que la palabra no sea igual a algún keyword será catalogado como ID
+                            token = dicc["id"] #En dado caso que la palabra no sea igual a algún keyword será catalogado como ID    
                 elif(palabra.startswith('i')):
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
@@ -77,14 +90,13 @@ class analisis:
                                 break;
                             palabra+=b
                         if(palabra == "if"):
-                            token = dicc["If"]
+                            token = dicc["If"]     
                         elif(palabra == "int"):
-                            token = dicc["Int"]
+                            token = dicc["Int"]      
                         elif(palabra == "input"):
-                            token = dicc["Input"]
+                            token = dicc["Input"]   
                         else:
                             token = dicc["id"]
-
                 elif (palabra.startswith ('w')):
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
@@ -93,7 +105,7 @@ class analisis:
                                 break;
                             palabra+=b
                         if(palabra == "while"):
-                            token = dicc["While"]
+                            token = dicc["While"]    
                         else:
                             token = dicc["id"]
                 elif (palabra.startswith ('e')):
@@ -104,9 +116,9 @@ class analisis:
                                 break;
                             palabra+=b
                         if(palabra == "else"):
-                            token = dicc["Else"]
+                            token = dicc["Else"]     
                         else:
-                            token = dicc["id"]
+                            token = dicc["id"]  
                 elif (palabra.startswith ('o')):
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
@@ -117,7 +129,7 @@ class analisis:
                         if(palabra == "output"):
                             token = dicc["Output"]
                         else:
-                            token = dicc["id"]
+                            token = dicc["id"]  
                 elif (palabra.startswith ('r')):
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
@@ -126,9 +138,9 @@ class analisis:
                                 break;
                             palabra+=b
                         if(palabra == "return"):
-                            token = dicc["Return"]
+                            token = dicc["Return"]       
                         else:
-                            token = dicc["id"]
+                            token = dicc["id"]      
                 else:
                     token = dicc ["id"]
                     while(codigo.isalpha()):
@@ -137,7 +149,9 @@ class analisis:
                             if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
-                print(token)
+                posicion = posicion+1
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
                 #print(palabra)
             if (palabra.isdigit()): #Nos permititrá saber si el caracter es un número
                 while(codigo.isdigit()):#Si los caracteres son números entrará en este ciclo
@@ -148,19 +162,30 @@ class analisis:
                         palabra+=b
                     if (palabra.isdigit()): #Si cumple las condiciones se cataloga con su respectivo token
                         token = dicc ["num"]
-                print(token)
+                posicion = posicion+1
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
                 #print(palabra)
             if ( '@' in codigo or '&' in codigo or '%' in codigo or '#' in codigo or '"' in codigo or '^' in codigo or '¨' in codigo or '-' in codigo or '_' in codigo or '´' in codigo or '`' in codigo):
                 sys.exit("Error caracter inválido: " +codigo)
             if (codigo == '+'):#En esta seccion compara símbolos 
                 token = dicc["suma"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '-'):
                 token = dicc["resta"]
-                print(token)
+                palabra = codigo
+                posicion = posicion+1
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '*'):
                 token = dicc["multiplicacion"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '/'):
                 tokenAnterior = codigo
                 codigo=archivo.read(1)
@@ -179,31 +204,58 @@ class analisis:
                             sys.exit("Error comentario no terminado")
                 else:
                     token = dicc["division"]
-                    print(token)     
+                    posicion = posicion+1
+                    palabra = codigo
+                    print(token+ ", "+str(posicion))    
+                    self.symbolTable()
             elif (codigo == ';'):
                 token = dicc["semicolon"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == ','):
                 token = dicc["coma"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '('):
                 token = dicc["parentesis_abierto"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == ')'):
                 token = dicc["parentesis_cerrado"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '['):
                 token = dicc["brackets_abiertas"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == ']'):
                 token = dicc["brackets_cerradas"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '{'):
                 token = dicc["curly_abiertas"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '}'):
                 token = dicc["curly_cerradas"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '<'): #Si se encuentra con este símbolo hará otro analisis
                 tokenAnterior = codigo
                 codigo=archivo.read(1)
@@ -211,10 +263,14 @@ class analisis:
                 if (resultado == '<='):
                     token = dicc["menor_igual_que"]
                     codigo = resultado
+                    palabra = codigo
                 else:
                     token = dicc["menor_que"]
                     codigo = resultado
-                print(token)
+                    palabra = codigo
+                posicion = posicion+1
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '>'):
                 tokenAnterior = codigo
                 codigo=archivo.read(1)
@@ -222,10 +278,14 @@ class analisis:
                 if (resultado == '>='):
                     token = dicc["mayor_igual_que"]
                     codigo = resultado
+                    palabra = codigo
                 else:
                     token = dicc["mayor_que"]
                     codigo = resultado
-                print(token)
+                    palabra = codigo
+                posicion = posicion+1
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '='):
                 tokenAnterior = codigo
                 codigo=archivo.read(1)
@@ -233,10 +293,14 @@ class analisis:
                 if (resultado == '=='):
                     token = dicc["igual_que"]
                     codigo = resultado
+                    palabra = codigo
                 else:
                     token = dicc["asignacion"]
                     codigo = resultado
-                print(token)
+                    palabra = codigo
+                posicion = posicion+1
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             elif (codigo == '!'):#Mismo caso que los anteriores solo que este únicamente puede existir si el símbolo de = está junto a él
                 tokenAnterior = codigo
                 codigo=archivo.read(1)
@@ -244,23 +308,32 @@ class analisis:
                 if (resultado == '!='):
                     token = dicc["es_diferente"]
                     codigo = resultado
+                    palabra = codigo
                 else:
-                    sys.exit("Error de sintaxis, se esperaba '=', texto encontrado: " + codigo)
+                    sys.exit("Error de sintaxis, se esperaba '='")
                     codigo = resultado
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             #Analiza los saltos de línea    
             if (codigo == '\n'):
                 token = dicc["nueva_linea"]
-                print(token)
+                posicion = posicion+1
+                palabra = codigo
+                print(token+ ", "+str(posicion))
+                self.symbolTable()
             #Analiza los espacios en blanco y los ignora
             if(codigo == ' ' or codigo == '\t'):
                 None
             if not codigo: break
         # print (codigo) #Imprime el código 
+        print(tabulate(tokens, headers=headers))
 
 
 
 
 analisis().leerArchivo()
 analisis().conteo()
+analisis().symbolTable()
 
