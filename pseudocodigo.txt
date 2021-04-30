@@ -1,0 +1,45 @@
+
+analisis(){
+    while True: 
+        codigo=archivo.read(1)
+            palabra = codigo
+            while(codigo.esletra()):
+                for b in codigo:
+                    if (b == espacioBlanco or simbolo):
+                        break;
+                    palabra+=b
+                if (palabra.startswith ('v')):
+                    while(codigo.esletra()):
+                        codigo=archivo.read(1)
+                        for b in codigo:
+                            if (b== espacioBlanco or simbolo):
+                                break;
+                            palabra+=b
+                        if(palabra == "void"):
+                            token = dicc["Void"]
+                        else:
+                            token = dicc["id"]
+            if (palabra.esNumero()):
+                while(codigo.esNumero()):
+                    codigo=archivo.read(1)
+                    for b in codigo:
+                        if (b == espacioBlanco or simbolo):
+                            break;
+                        palabra+=b
+                    if (palabra.esNumero()):
+                        token = dicc ["num"]
+            elif (codigo == '-'):
+                token = dicc["resta"]
+                print(token)
+            elif (codigo == '>'):
+                tokenAnterior = codigo
+                codigo=archivo.read(1)
+                resultado = tokenAnterior+codigo
+                if (resultado == '>='):
+                    token = dicc["mayor_igual_que"]
+                    codigo = resultado
+                else:
+                    token = dicc["mayor_que"]
+                    codigo = resultado
+                print(token)
+}
