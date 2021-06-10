@@ -43,6 +43,7 @@ palabra = None
 posicion = 0
 tokens=[]
 headers=["Entrada", "Lexema", "Tipo"]
+tabla = []
 
 class analisis:
     #Leerá el archivo que se proporcione y lo guarda en variable
@@ -62,6 +63,7 @@ class analisis:
         global posicion
         global token
         global palabra
+        global tabla
         while True:
             codigo=archivo.read(1)
             palabra = codigo
@@ -332,9 +334,6 @@ class analisis:
         print(tabla)
 
 
-
-
 analisis().leerArchivo()
 analisis().conteo()
 analisis().symbolTable()
-
