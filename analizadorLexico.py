@@ -70,14 +70,14 @@ class analisis:
             while(codigo.isalpha()): #Comienza a revisar si los caracteres son letras
                 for b in codigo:
                     #Aquí se asegurará de detener el almacenamiento de caracteres si se encuentra con alguna de estas condiciones
-                    if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!", b == "," or b == ";"):
+                    if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!", b == "," or b == ";"):
                         break;
                     palabra+=b
                 if (palabra.startswith ('v')): #comenzará a coomparar las letras que almacenó, si concuerda con alguna condicional entra en el ciclo
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
                         for b in codigo:
-                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
                         if(palabra == "void"):
@@ -88,7 +88,7 @@ class analisis:
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
                         for b in codigo:
-                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
                         if(palabra == "if"):
@@ -103,7 +103,7 @@ class analisis:
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
                         for b in codigo:
-                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
                         if(palabra == "while"):
@@ -114,7 +114,7 @@ class analisis:
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
                         for b in codigo:
-                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
                         if(palabra == "else"):
@@ -125,7 +125,7 @@ class analisis:
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
                         for b in codigo:
-                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
                         if(palabra == "output"):
@@ -136,7 +136,7 @@ class analisis:
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
                         for b in codigo:
-                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
                         if(palabra == "return"):
@@ -148,7 +148,7 @@ class analisis:
                     while(codigo.isalpha()):
                         codigo=archivo.read(1)
                         for b in codigo:
-                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                            if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                                 break;
                             palabra+=b
                 posicion = posicion+1
@@ -159,7 +159,7 @@ class analisis:
                 while(codigo.isdigit()):#Si los caracteres son números entrará en este ciclo
                     codigo=archivo.read(1)
                     for b in codigo:
-                        if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "-" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
+                        if (b == " " or b == "(" or b == ")" or b == "{" or b == "}" or b == "[" or b == "]" or b == "+" or b == "/" or b == "*" or b == "=" or b == "!" or b == "," or b == ";"):
                             break;
                         palabra+=b
                     if (palabra.isdigit()): #Si cumple las condiciones se cataloga con su respectivo token
@@ -168,7 +168,7 @@ class analisis:
                 print(token+ ", "+str(posicion))
                 self.symbolTable()
                 #print(palabra)
-            if ( '@' in codigo or '&' in codigo or '%' in codigo or '#' in codigo or '"' in codigo or '^' in codigo or '¨' in codigo or '-' in codigo or '_' in codigo or '´' in codigo or '`' in codigo):
+            if ( '@' in codigo or '&' in codigo or '%' in codigo or '#' in codigo or '"' in codigo or '^' in codigo or '¨' in codigo or '_' in codigo or '´' in codigo or '`' in codigo):
                 sys.exit("Error caracter inválido: " +codigo)
             if (codigo == '+'):#En esta seccion compara símbolos 
                 token = dicc["suma"]

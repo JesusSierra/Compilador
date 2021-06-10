@@ -1,15 +1,35 @@
-void main (identificador){
+int miniloc(int a[], int low, int high) {
+    int i; 
+    int x; 
+    int k;
+    k = low;
+    x = a[low];
+    i = low + 1;
+    while (i < high){
+        if (a[i] < x){
+            x = a[i];
+            k = i;
+            }
+        i = i + 1;
+    }
+    return k;
+}
+void main (identificador) {
     /*hola como estás*/
     int i;
     i = 0;
+    if (a[i] < x){
+        input a[i];
+        k = i;
+    }
+    miniloc(5,0,10);
     while (i >= 10){
         input x[i];
         i = i + 1;
     }
-    sort(x,0,10);
     i = 0;
     while (i < 10){
         output x[i];
         i = i + 1;
-        }
+    }
 }
