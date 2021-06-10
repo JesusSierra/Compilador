@@ -198,6 +198,7 @@ class sintax:
                         self.statement(currentToken)
                 else:
                     sys.exit("Error sintáctico en selection_ stmt se esperaba ')")
+            else: sys.exit("Error sintáctico en intento de selection se esperaba '('")
         else:
             return currentToken
     def iteration_stmt(self, currentToken):
@@ -213,6 +214,8 @@ class sintax:
                     return currentToken
                 else:
                     sys.exit("Error sintáctico en iteration_stmt se esperaba: ')' ")
+            else: 
+                sys.exit("Error sintáctico en intento de iteration se esperaba '('")
         else:
             return currentToken
     def return_stmt(self, currentToken):
@@ -268,6 +271,10 @@ class sintax:
         else: 
             return currentToken
     def expression(self, currentToken):
+        if(currentToken == 'SEMICOLON'):
+            sys.exit("Error sintáctico no se encontraron valores después del '=' ")
+        if(currentToken == 'MENOR_IGUAL_QUE' or currentToken == 'MENOR_QUE' or currentToken == 'MAYOR_QUE' or currentToken == 'MAYOR' or currentToken == 'MAYOR_IGUAL_QUE' or currentToken == 'MENOR'):
+            sys.exit("Error sintáctico no se encontraron valores para crear la expresión")
         currentToken = self.arithmetic_expression(currentToken)
         currentToken = self.relop(currentToken)
         currentToken = self.arithmetic_expression(currentToken)
@@ -277,27 +284,45 @@ class sintax:
         if(currentToken=='MENOR_IGUAL_QUE'):
             print("relop")
             currentToken = self.Match(currentToken)
-            return currentToken
+            if(currentToken == 'PARENTESIS_ABIERTO' or currentToken == 'INT' or currentToken == 'ID' or currentToken == 'NUM'):
+                return currentToken
+            else:
+                sys.exit("No se encontraron valores después de la condicionante")
         elif(currentToken=='MENOR_QUE'):
             print("relop")
             currentToken = self.Match(currentToken)
-            return currentToken
+            if(currentToken == 'PARENTESIS_ABIERTO' or currentToken == 'INT' or currentToken == 'ID' or currentToken == 'NUM'):
+                return currentToken
+            else:
+                sys.exit("No se encontraron valores después de la condicionante")      
         elif(currentToken=='MAYOR_QUE'):
             print("relop")
             currentToken = self.Match(currentToken)
-            return currentToken
+            if(currentToken == 'PARENTESIS_ABIERTO' or currentToken == 'INT' or currentToken == 'ID' or currentToken == 'NUM'):
+                return currentToken
+            else:
+                sys.exit("No se encontraron valores después de la condicionante")
         elif(currentToken=='MAYOR_IGUAL_QUE'):
             print("relop")
             currentToken = self.Match(currentToken)
-            return currentToken
+            if(currentToken == 'PARENTESIS_ABIERTO' or currentToken == 'INT' or currentToken == 'ID' or currentToken == 'NUM'):
+                return currentToken
+            else:
+                sys.exit("No se encontraron valores después de la condicionante")
         elif(currentToken=='IGUAL_QUE'):
             print("relop")
             currentToken = self.Match(currentToken)
-            return currentToken
+            if(currentToken != 'PARENTESIS_ABIERTO' or currentToken != 'INT' or currentToken != 'ID' or currentToken != 'NUM'):
+                return currentToken
+            else:
+                sys.exit("No se encontraron valores después de la condicionante")
         elif(currentToken=='ES_DIFERENTE'):
             print("relop")
             currentToken = self.Match(currentToken)
-            return currentToken
+            if(currentToken != 'PARENTESIS_ABIERTO' or currentToken != 'INT' or currentToken != 'ID' or currentToken != 'NUM'):
+                return currentToken
+            else:
+                sys.exit("No se encontraron valores después de la condicionante")
         else:
             return currentToken
     def arithmetic_expression(self, currentToken):
@@ -419,6 +444,8 @@ class sintax:
             # index2 = index2 + 1
             currentToken = a.obtenerToken()
             return currentToken
+    # Lógica Semántica
+    
 
 
 a = sintax()
