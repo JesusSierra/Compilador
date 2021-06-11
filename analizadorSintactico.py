@@ -5,7 +5,9 @@ tablaTokens=[]
 index = 0
 lista =[]
 currentToken = ""
-
+variablesDeclaradas = []
+variable = []
+variableGuardada=[]
 
 class sintax:   
     def main(self):
@@ -39,6 +41,7 @@ class sintax:
     def declaration_listPrime(self, currentToken):
         currentToken = self.declaration(currentToken)
         if(currentToken == '$'):
+            currentToken = self.checkFuncMain(currentToken)
             sys.exit("Parser completado correctamente")
         else: 
             sys.exit("Error sintáctico forma incorrecta de iniciar el stmt")
@@ -49,6 +52,7 @@ class sintax:
     def var_declaration(self, currentToken):
         currentToken = self.type_specifier(currentToken)
         if (currentToken == 'ID'):
+            currentToken = self.saveVars(currentToken)
             currentToken = self.Match(currentToken)
             if (currentToken == 'SEMICOLON'):
                 currentToken = self.Match(currentToken)
@@ -69,6 +73,7 @@ class sintax:
             print("fun_declaration")
             currentToken = self.Match(currentToken)
             if (currentToken == 'ID'):
+                currentToken = self.saveVars(currentToken)
                 currentToken = self.Match(currentToken)
                 if (currentToken == 'PARENTESIS_ABIERTO'):
                     currentToken = self.Match(currentToken)
@@ -102,6 +107,7 @@ class sintax:
     def param(self, currentToken):
         currentToken = self.type_specifier(currentToken)
         if(currentToken=='ID'):
+            currentToken = self.saveVars(currentToken)
             currentToken = self.Match(currentToken)
             print("param")
             if(currentToken=='BRACKETS_ABIERTAS'):
@@ -257,6 +263,7 @@ class sintax:
     def var(self, currentToken):
         if(currentToken=='ID'):
             print("var")
+            currentToken = self.checkVars(currentToken)
             currentToken = self.Match(currentToken)
             if(currentToken=='BRACKETS_ABIERTAS'):
                 currentToken = self.Match(currentToken)
@@ -348,10 +355,14 @@ class sintax:
         if(currentToken=='SUMA'):
             print("addop")
             currentToken = self.Match(currentToken)
+            if(currentToken == 'SEMICOLON'):
+                sys.exit("Error de sintaxis se esperaba un valor después de '+' ")
             return currentToken
         elif(currentToken=='RESTA'):
             print("addop")
             currentToken = self.Match(currentToken)
+            if(currentToken == 'SEMICOLON'):
+                sys.exit("Error de sintaxis se esperaba un valor después de '-' ")
             return currentToken
         else: 
             return currentToken
@@ -383,6 +394,8 @@ class sintax:
         else: 
             return currentToken
     def factor(self, currentToken):
+        if (currentToken == 'RESTA'):
+            sys.exit("Error no se permiten números negativos")
         if (currentToken == 'PARENTESIS_ABIERTO'):
             print("factor")
             currentToken = self.Match(currentToken)
@@ -396,13 +409,14 @@ class sintax:
         currentToken = self.var(currentToken)
         currentToken = self.call(currentToken)
         if(currentToken=='NUM'):
-            print("factor")
+            print("numero")
             currentToken = self.Match(currentToken)
             return currentToken
         else: 
             return currentToken
     def call(self, currentToken):
         if(currentToken=='ID'):
+            currentToken = self.checkVars(currentToken)
             currentToken = self.Match(currentToken)
             if(currentToken=='PARENTESIS_ABIERTO'):
                 print("call")
@@ -445,7 +459,40 @@ class sintax:
             currentToken = a.obtenerToken()
             return currentToken
     # Lógica Semántica
-    
+    def saveVars(self, currentToken):
+        global variablesDeclaradas
+        variablesDeclaradas.append(tablaTokens[index-1][1])
+        a_set = set(variablesDeclaradas)
+        contains_duplicates = len(variablesDeclaradas) != len(a_set)
+        if (contains_duplicates == True):
+            sys.exit("Error se está declarando una variable anteriormente declarada")
+        return currentToken
+    def checkVars(self, currentToken):
+        global variable
+        count = 0
+        variable.append(tablaTokens[index-1][1])
+        if ("".join(variable) in variablesDeclaradas):
+            variable.pop()
+            return currentToken
+        else:
+            sys.exit("Error variable no declarada " + str(variable))
+    def checkFuncMain(self, currentToken):
+        global variableGuardada
+        for i in tablaTokens:
+            variableGuardada.append(i[1])
+        requeridos=['main', 'void']
+        if('void' in variableGuardada):
+            if('main' in variableGuardada):
+                if('(' in variableGuardada):
+                    if(')' in variableGuardada):
+                        return currentToken
+                    else:
+                        sys.exit("Error")
+                else:
+                    sys.exit("Error")
+            else:
+                sys.exit("Error no existe función main")
+        return currentToken
 
 
 a = sintax()
