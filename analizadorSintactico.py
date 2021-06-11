@@ -65,7 +65,7 @@ class sintax:
                 print ("var_declaration")
                 return currentToken
             else:
-                sys.exit("Error sintácctico se esperaba ';' ")
+                sys.exit("Error sintácctico en var_declaration se esperaba ';' ")
         else:
             return currentToken
     def type_specifier(self, currentToken):
@@ -143,11 +143,11 @@ class sintax:
                 currentToken = self.Match(currentToken)
                 return currentToken
             else:
-                sys.exit("Error sintáctico se esperaba '}' ")
+                sys.exit("Error sintáctico en compound _statement se esperaba '}' ")
         elif(currentToken != 'CURLY_ABIERTAS'):
             return currentToken
         else:
-                sys.exit("Error sintáctico se esperaba '{' ")
+                sys.exit("Error sintáctico en compound _statement se esperaba '{' ")
     def local_declarations(self, currentToken):
         currentToken = self.local_declarationsPrime(currentToken)
         return currentToken
@@ -261,6 +261,8 @@ class sintax:
         if(currentToken=='INPUT'):
             print("input_stmt")
             currentToken= self.Match(currentToken)
+            if(currentToken != 'ID'):
+                sys.exit("Error sintáctico no se encontraron las variables requeridas para el input")
             currentToken= self.var(currentToken)
             if(currentToken=='SEMICOLON'):
                 currentToken= self.Match(currentToken)
@@ -274,6 +276,8 @@ class sintax:
         if(currentToken=='OUTPUT'):
             print("output_stmt")
             currentToken = self.Match(currentToken)
+            if(currentToken != 'ID'):
+                sys.exit("Error sintáctico no se encontraron las variables requeridas para el output")
             currentToken = self.expression(currentToken)
             if(currentToken=='SEMICOLON'):
                 currentToken = self.Match(currentToken)
